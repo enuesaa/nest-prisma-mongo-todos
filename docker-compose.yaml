@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:4.2-rc-bionic
+    ports:
+      - 27017:27017
+    volumes:
+      - ./docker/mongo/db:/data/db
+
+  mongo-express:
+    image: mongo-express:0.54.0
+    ports:
+      - 80:8081
+    depends_on:
+      - mongo
+    tty: true
