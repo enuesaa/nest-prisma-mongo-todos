@@ -29,12 +29,13 @@ export class TodosController {
   }
 
   @Put(':id')
-  edit(@Param() params): {} {
-    return {}
+  async edit(@Param() params: GetTodoInput, @Body() input: CreateTodoInput): Promise<Todo | {}> {
+    const data = {name: 'aa', description: 'bbb'}
+    return await this.todoService.update(params.id, data);
   }
 
   @Delete(':id')
-  delete(@Param() params): {} {
-    return {}
+  async delete(@Param() params: GetTodoInput): Promise<{}> {
+    return await this.todoService.delete(params.id);
   }
 }

@@ -17,4 +17,12 @@ export class TodosService {
   async save(data: Prisma.TodoCreateInput): Promise<Todo> {
     return this.prismaService.todo.create({ data });
   }
+
+  async update(id: string, data: Prisma.TodoUpdateInput): Promise<Todo> {
+    return this.prismaService.todo.update({where: {id: id}, data: data });
+  }
+
+  async delete(id: string): Promise<{}> {
+    return this.prismaService.todo.delete({where: {id: id}})
+  }
 }
