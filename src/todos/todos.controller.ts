@@ -1,13 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Put,
-  Delete,
-  Param,
-  Body,
-  UseFilters,
-} from '@nestjs/common'
+import { Controller, Get, Post, Put, Delete, Param, Body, UseFilters } from '@nestjs/common'
 import { TodosService } from '@/todos/todos.service'
 import { CreateTodoDto } from '@/todos/dto/create-todo.dto'
 import { IdDto } from '@/todos/dto/id.dto'
@@ -37,10 +28,7 @@ export class TodosController {
   }
 
   @Put(':id')
-  async edit(
-    @Param() { id }: IdDto,
-    @Body() dto: CreateTodoDto
-  ): Promise<IdDto> {
+  async edit(@Param() { id }: IdDto, @Body() dto: CreateTodoDto): Promise<IdDto> {
     await this.todoService.updateById(id, dto as TodoInterface)
     return { id: id }
   }
