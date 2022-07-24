@@ -17,6 +17,6 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
   }
 
   createObjectId(): string {
-    return (new ObjectId()).toString()
+    return new ObjectId().toString();
   }
 }

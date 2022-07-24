@@ -7,12 +7,10 @@ export class AppFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 
-    response
-      .status(400)
-      .json({
-        statusCode: 400,
-        message: e.message,
-        timestamp: new Date().toISOString(),
-      });
+    response.status(400).json({
+      statusCode: 400,
+      message: e.message,
+      timestamp: new Date().toISOString(),
+    });
   }
 }
