@@ -1,41 +1,41 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
-import { Prisma, Todo } from '@prisma/client';
+import { Controller, Get, Post, Put, Delete, Param, Body, UseFilters } from '@nestjs/common';
 import { TodosService } from '@/todos/todos.service'
-import { ObjectId } from 'bson'
-
-type GetTodoInput = {
-  readonly id: string;
-};
-type CreateTodoInput = Readonly<Omit<Prisma.TodoCreateInput, 'id'>>;
+import { CreateTodoDto } from '@/todos/dto/create-todo.dto'
+import { IdDto } from '@/todos/dto/id.dto'
+import { TodoDto } from '@/todos/dto/todo.dto'
+import { TodoInterface } from '@/todos/interfaces/todo.interface'
+import { AppFilter } from '@/app.filter';
 
 @Controller('todos')
 export class TodosController {
   constructor(private readonly todoService: TodosService) {}
 
   @Get()
-  async list(): Promise<Todo[]> {
-    return await this.todoService.findAll();
+  async list(): Promise<TodoDto[]> {
+    return await this.todoService.find();
   }
 
   @Get(':id')
-  async view(@Param() params: GetTodoInput): Promise<Todo> {
-    return await this.todoService.findOne(params);
+  @UseFilters(AppFilter)
+  async view(@Param() {id}: IdDto): Promise<TodoDto> {
+    return await this.todoService.findById(id);
   }
 
   @Post()
-  async add(@Body() input: CreateTodoInput): Promise<Todo> {
-    const data = {id: (new ObjectId()).toString(), name: 'aaa', description: 'bbb'}
-    return await this.todoService.create(data);
+  async add(@Body() dto: CreateTodoDto): Promise<IdDto> {
+    const id = await this.todoService.create(dto as TodoInterface);
+    return {id: id}
   }
 
   @Put(':id')
-  async edit(@Param() params: GetTodoInput, @Body() input: CreateTodoInput): Promise<Todo | {}> {
-    const data = {name: 'aa', description: 'bbb'}
-    return await this.todoService.update(params.id, data);
+  async edit(@Param() {id}: IdDto, @Body() dto: CreateTodoDto): Promise<IdDto> {
+    await this.todoService.updateById(id, dto as TodoInterface);
+    return {id: id}
   }
 
   @Delete(':id')
-  async delete(@Param() params: GetTodoInput): Promise<{}> {
-    return await this.todoService.remove(params.id);
+  async delete(@Param() {id}: IdDto): Promise<{}> {
+    await this.todoService.removeById(id);
+    return {}
   }
 }
