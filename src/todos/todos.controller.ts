@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
 import { Prisma, Todo } from '@prisma/client';
-import { TodosService } from './todos.service'
+import { TodosService } from '@/todos/todos.service'
 import { ObjectId } from 'bson'
 
 type GetTodoInput = {
