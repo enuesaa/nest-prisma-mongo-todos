@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
 import { Prisma, Todo } from '@prisma/client';
 import { TodosService } from './todos.service'
+import { ObjectId } from 'bson'
 
 type GetTodoInput = {
   readonly id: string;
@@ -23,7 +24,8 @@ export class TodosController {
 
   @Post()
   async add(@Body() input: CreateTodoInput): Promise<Todo> {
-    return await this.todoService.save(input);
+    const data = {id: (new ObjectId()).toString(), name: 'aaa', description: 'bbb'}
+    return await this.todoService.save(data);
   }
 
   @Put(':id')
