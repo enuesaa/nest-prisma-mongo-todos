@@ -14,18 +14,18 @@ export class TodosController {
 
   @Get()
   async list(): Promise<Todo[]> {
-    return await this.todoService.find();
+    return await this.todoService.findAll();
   }
 
   @Get(':id')
   async view(@Param() params: GetTodoInput): Promise<Todo> {
-    return await this.todoService.findById(params);
+    return await this.todoService.findOne(params);
   }
 
   @Post()
   async add(@Body() input: CreateTodoInput): Promise<Todo> {
     const data = {id: (new ObjectId()).toString(), name: 'aaa', description: 'bbb'}
-    return await this.todoService.save(data);
+    return await this.todoService.create(data);
   }
 
   @Put(':id')
@@ -36,6 +36,6 @@ export class TodosController {
 
   @Delete(':id')
   async delete(@Param() params: GetTodoInput): Promise<{}> {
-    return await this.todoService.delete(params.id);
+    return await this.todoService.remove(params.id);
   }
 }

@@ -6,15 +6,15 @@ import { Prisma, Todo } from '@prisma/client';
 export class TodosService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async find(): Promise<Todo[]> {
+  async findAll(): Promise<Todo[]> {
     return this.prismaService.todo.findMany();
   }
 
-  async findById(todoWhereUniqueInput: Prisma.TodoWhereUniqueInput): Promise<Todo | null> {
+  async findOne(todoWhereUniqueInput: Prisma.TodoWhereUniqueInput): Promise<Todo | null> {
     return this.prismaService.todo.findUnique({ where: todoWhereUniqueInput });
   }
 
-  async save(data: Prisma.TodoCreateInput): Promise<Todo> {
+  async create(data: Prisma.TodoCreateInput): Promise<Todo> {
     return this.prismaService.todo.create({ data });
   }
 
@@ -22,7 +22,7 @@ export class TodosService {
     return this.prismaService.todo.update({where: {id: id}, data: data });
   }
 
-  async delete(id: string): Promise<{}> {
+  async remove(id: string): Promise<{}> {
     return this.prismaService.todo.delete({where: {id: id}})
   }
 }
