@@ -13,8 +13,8 @@ export class TodosController {
   constructor(private readonly todoService: TodosService) {}
 
   @Get()
-  list(): Array<{}> {
-    return []
+  async list(): Promise<Todo[]> {
+    return await this.todoService.find();
   }
 
   @Get(':id')
