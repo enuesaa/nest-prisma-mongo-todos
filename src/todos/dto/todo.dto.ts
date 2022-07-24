@@ -1,5 +1,5 @@
 export class TodoDto {
-  id: string;
-  name: string;
-  description: string | null;
+  id: string
+  name: string
+  description: string | null
 }

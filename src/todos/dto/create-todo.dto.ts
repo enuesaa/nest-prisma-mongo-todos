@@ -1,10 +1,10 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator'
 
 export class CreateTodoDto {
   @IsString()
-  readonly name: string;
+  readonly name: string
 
   @IsOptional()
   @IsString()
-  readonly description: string | null;
+  readonly description: string | null
 }
